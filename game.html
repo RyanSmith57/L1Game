@@ -19,16 +19,14 @@
             setInterval(mainloop, 1000 / 50);
         }
 
-       
-
-        var playerXpos = 0;
-        var playerYpos = 0;
+        var playerXpos = 80;
+        var playerYpos = 20;
         var playerXspeed = 0;
         var playerYspeed = 10;
         const PLAYER_SIZE = 20;
         
-        const UP_KEY = 38;
-        var upKeyPressed = false;
+        const SPACE_KEY = 32;
+        var spaceKeyPressed = false;
 
  
 
@@ -42,20 +40,20 @@
          
         function keyPressed(evt){
             console.log(evt.keyCode)
-            if(evt.keyCode == UP_KEY){
-               upKeyPressed = true;
+            if(evt.keyCode == SPACE_KEY){
+               spaceKeyPressed = true;
             }
         }
              
         function keyReleased(evt){
-            if(evt.keyCode == UP_KEY){
-               upKeyPressed = false;
+            if(evt.keyCode == SPACE_KEY){
+               spaceKeyPressed = false;
             }
             
         }
         
         function playerMove() {
-            if(upKeyPressed){
+            if(spaceKeyPressed){
                 playerYpos -= playerYspeed;   
             }
         }
@@ -67,9 +65,6 @@
             canvasContext.fillRect(x, y, w, h);
         }
  
-
-
-
 
 
     </script>

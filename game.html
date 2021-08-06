@@ -54,8 +54,11 @@
         
         function playerMove() {
             if(spaceKeyPressed){
-                playerYpos -= playerYspeed;   
+                playerYspeed = -5;   
+            
             }
+            playerYpos+=playerYspeed;
+            playerYspeed+=.2;
         }
 
  

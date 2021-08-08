@@ -5,7 +5,7 @@
 </head>
 
 <body>
-    <canvas id="gameCanvas" width="1900" height="900"></canvas>
+    <canvas id="gameCanvas" width="1000" height="800"></canvas>
     <script>
         var canvas, canvasContext;
 
@@ -19,7 +19,7 @@
             setInterval(mainloop, 1000 / 50);
         }
 
-        var playerXpos = 80;
+        var playerXpos = 300;
         var playerYpos = 20;
         var playerXspeed = 0;
         var playerYspeed = 10;
@@ -65,10 +65,11 @@
                 playerYspeed = 0.5;
             }
 
-            if (playerYpos < ) {
-               
-            }
+            if (playerYpos + PLAYER_SIZE >= canvas.height) {
+                playerYpos = canvas.height - PLAYER_SIZE;
+                playerYspeed = -5;
 
+            }
         }
 
         function colorRect(x, y, w, h, c) {

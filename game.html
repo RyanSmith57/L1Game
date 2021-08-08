@@ -5,14 +5,14 @@
 </head>
 
 <body>
-    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <canvas id="gameCanvas" width="1900" height="900"></canvas>
     <script>
         var canvas, canvasContext;
 
         window.onload = function() {
             canvas = document.getElementById('gameCanvas');
             canvasContext = canvas.getContext('2d');
-            
+
             document.addEventListener('keydown', keyPressed);
             document.addEventListener('keyup', keyReleased);
 
@@ -24,53 +24,57 @@
         var playerXspeed = 0;
         var playerYspeed = 10;
         const PLAYER_SIZE = 20;
-        
+
         const SPACE_KEY = 32;
         var spaceKeyPressed = false;
 
- 
+
 
         function mainloop() {
             colorRect(0, 0, canvas.width, canvas.height, 'black');
-            colorRect(playerXpos,playerYpos,PLAYER_SIZE,PLAYER_SIZE, 'red'); // player
-  
+            colorRect(playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE, 'red'); // player
+
             playerMove();
         }
-        
-         
-        function keyPressed(evt){
+
+
+        function keyPressed(evt) {
             console.log(evt.keyCode)
-            if(evt.keyCode == SPACE_KEY){
-               spaceKeyPressed = true;
+            if (evt.keyCode == SPACE_KEY) {
+                spaceKeyPressed = true;
             }
-        }
-             
-        function keyReleased(evt){
-            if(evt.keyCode == SPACE_KEY){
-               spaceKeyPressed = false;
-            }
-            
-        }
-        
-        function playerMove() {
-            if(spaceKeyPressed){
-                playerYspeed = -5;   
-            
-            }
-            playerYpos+=playerYspeed;
-            playerYspeed+=.2;
         }
 
- 
+        function keyReleased(evt) {
+            if (evt.keyCode == SPACE_KEY) {
+                spaceKeyPressed = false;
+            }
+
+        }
+
+        function playerMove() {
+            if (spaceKeyPressed) {
+                playerYspeed = -5;
+            }
+
+            playerYpos += playerYspeed;
+            playerYspeed += .2;
+
+            if (playerYpos <= 0) {
+                playerYpos = 0;
+                playerYspeed = 0.5;
+            }
+
+            if (playerYpos < ) {
+               
+            }
+
+        }
 
         function colorRect(x, y, w, h, c) {
             canvasContext.fillStyle = c;
             canvasContext.fillRect(x, y, w, h);
         }
- 
-
 
     </script>
 </body>
-
-

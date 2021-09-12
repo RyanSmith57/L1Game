@@ -5,7 +5,7 @@
 </head>
 
 <body>
-    <canvas id="gameCanvas" width="1000" height="800"></canvas>
+    <canvas id="gameCanvas" width="1250" height="900"></canvas>
     <script>
         var canvas, canvasContext;
 
@@ -19,24 +19,49 @@
             setInterval(mainloop, 1000 / 50);
         }
 
-        var playerXpos = 300;
-        var playerYpos = 20;
+        var playerXpos = 200;
+        var playerYpos = 500;
         var playerXspeed = 0;
         var playerYspeed = 10;
         const PLAYER_SIZE = 20;
+        
+        var enemyXpos = 800;
+        var enemyYpos = 500;
+        const ENEMY_SIZE = 50;
 
         const SPACE_KEY = 32;
         var spaceKeyPressed = false;
 
+        var enemies = [];
+
+        var starting = true;
 
 
         function mainloop() {
             colorRect(0, 0, canvas.width, canvas.height, 'black');
-            colorRect(playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE, 'red'); // player
+            colorRect(playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE, 'red'); // player'
+            colorRect(enemyXpos, enemyYpos, ENEMY_SIZE * 2, ENEMY_SIZE * 10, 'blue'); // enemy
+
+            if (starting) {
+                for (var i = 0; i < 10; i++) {
+                    makeEnemy();
+                }
+            }
 
             playerMove();
         }
 
+
+        function makeEnemy() {
+            var eXpos = Math.floor(Math.random() * (canvas.width - ENEMY_SIZE));
+            var eYpos = 0;
+            var eXpos = 0;
+            var eXspeed = 5;
+            var eYspeed = 5;
+           
+
+
+        }
 
         function keyPressed(evt) {
             console.log(evt.keyCode)
@@ -54,7 +79,7 @@
 
         function playerMove() {
             if (spaceKeyPressed) {
-                playerYspeed = -5;
+                playerYspeed = -7;
             }
 
             playerYpos += playerYspeed;
@@ -71,6 +96,8 @@
 
             }
         }
+
+        function enemyMove() {}
 
         function colorRect(x, y, w, h, c) {
             canvasContext.fillStyle = c;

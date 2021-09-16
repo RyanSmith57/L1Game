@@ -24,11 +24,8 @@
         var playerXspeed = 0;
         var playerYspeed = 10;
         const PLAYER_SIZE = 20;
-        
-        var enemyXpos = 800;
-        var enemyYpos = 500;
-        const ENEMY_SIZE = 50;
 
+        
         const SPACE_KEY = 32;
         var spaceKeyPressed = false;
 
@@ -40,27 +37,58 @@
         function mainloop() {
             colorRect(0, 0, canvas.width, canvas.height, 'black');
             colorRect(playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE, 'red'); // player'
-            colorRect(enemyXpos, enemyYpos, ENEMY_SIZE * 2, ENEMY_SIZE * 10, 'blue'); // enemy
 
+            playerMove();
             if (starting) {
                 for (var i = 0; i < 10; i++) {
                     makeEnemy();
                 }
+                starting = false
             }
+            drawEnemy();
+            enemyMove();
 
-            playerMove();
         }
 
+        function colorRect(x, y, w, h, c) {
+            canvasContext.fillStyle = c;
+            canvasContext.fillRect(x, y, w, h);
+        }
 
         function makeEnemy() {
-            var eXpos = Math.floor(Math.random() * (canvas.width - ENEMY_SIZE));
-            var eYpos = 0;
-            var eXpos = 0;
+            var ENEMY_SIZE = 30;
+            var enemyXpos = Math.floor(Math.random() * (canvas.width - ENEMY_SIZE));
+            var enemyYpos = 300;
             var eXspeed = 5;
             var eYspeed = 5;
-           
+            
+ 
+            var enemy = {
+                enemyXpos: enemyXpos,
+                enemyYpos: enemyYpos,
+                ENEMY_SIZE: ENEMY_SIZE,
+                eXspeed: eXspeed,
+                eYspeed: eYspeed
+                
+            }
+            enemies.push(enemy);
 
+        }
+        
+        function drawEnemy() {
+            enemies.forEach(function(e, i, array) {
+                colorRect(e.enemyXpos, e.enemyYpos, e.ENEMY_SIZE, e.ENEMY_SIZE, 'lime');
+            })
+        }
 
+        
+        function enemyMove() {
+            enemies.forEach(function(e, i, array) {
+                e.enemyYpos += e.eYspeed;
+                if (e.enemyYpos > canvas.height) {
+                    e.enemyYpos = 0 - e.ENEMY_SIZE;
+                }
+            })
         }
 
         function keyPressed(evt) {
@@ -93,11 +121,9 @@
             if (playerYpos + PLAYER_SIZE >= canvas.height) {
                 playerYpos = canvas.height - PLAYER_SIZE;
                 playerYspeed = -5;
-
             }
         }
 
-        function enemyMove() {}
 
         function colorRect(x, y, w, h, c) {
             canvasContext.fillStyle = c;

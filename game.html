@@ -18,13 +18,35 @@
 
             setInterval(mainloop, 1000 / 50);
         }
-
+        
+        var userName = '';
+        while(userName == '' || userName == null){
+            userName = prompt('whats your name?','Tonys') //insert name
+        }
+        
+        var speed = 0;
+        
+        var difficulty '';
+        var pass =false;
+        
+        while(pass == false){ //until happy no exit
+            difficulty = prompt('how hard do you want it?','easy');
+            if(difficulty != null){
+                pass = true;
+            }
+        }
+        
+        if (difficulty == 'easy'){
+            speed = 4;
+        }
+        
+//player vars
         var playerXpos = 200;
         var playerYpos = 500;
         var playerXspeed = 0;
         var playerYspeed = 10;
         const PLAYER_SIZE = 20;
-
+ 
 
         const SPACE_KEY = 32;
         var spaceKeyPressed = false;
@@ -40,7 +62,7 @@
 
             playerMove();
             if (starting) {
-                for (var i = 0; i < 10; i++) {
+                for (var i = 0; i < 2; i++) {
                     makeEnemy();
                 }
                 starting = false
@@ -56,13 +78,12 @@
         }
 
         function makeEnemy() {
-            var ENEMY_SIZE = 100;
+           var ENEMY_SIZE = 100;
             var enemyYpos = Math.floor(Math.random() * (canvas.width - ENEMY_SIZE));
             var enemyXpos = canvas.width;
             var eXspeed = 8;
             var eYspeed = 5;
-
-
+//enemy vars
             var enemy = {
                 enemyXpos: enemyXpos,
                 enemyYpos: enemyYpos,
@@ -93,6 +114,9 @@
                 e.enemyXpos -= e.enemyXspeed;
                 if (e.enemyYpos > canvas.height) {
                     e.enemyYpos = 0 - e.ENEMY_SIZE;
+                    
+                if  (enemyXpos < 0)
+                    enemyXpos = 1000;
                 }
             })
         }

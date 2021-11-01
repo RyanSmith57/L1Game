@@ -5,6 +5,11 @@
 </head>
 
 <body>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJTnWWcJp7k0nW0Nle9YLA6yiH4PrJTeVObg&usqp=CAU">
+    <img src="">
+    
+    
+    
     <canvas id="gameCanvas" width="1250" height="900"></canvas>
     <script>
         var canvas, canvasContext;
@@ -21,23 +26,28 @@
         
         var userName = '';
         while(userName == '' || userName == null){
-            userName = prompt('whats your name?','Tonys') //insert name
+            userName = prompt('whats your name?','Tony') //insert name
         }
         
-        var speed = 0;
+        var eNum = 0;
         
-        var difficulty '';
+        var difficulty ='';
         var pass =false;
         
         while(pass == false){ //until happy no exit
             difficulty = prompt('how hard do you want it?','easy');
+            difficulty = difficulty.toLowerCase() //converts to lower case
             if(difficulty != null){
                 pass = true;
             }
         }
         
         if (difficulty == 'easy'){
-            speed = 4;
+            eNum = 4;
+        }
+        
+         if (difficulty == 'hard'){
+            eNum = 50;
         }
         
 //player vars
@@ -54,15 +64,20 @@
         var enemies = [];
 
         var starting = true;
+        
+        var gameRun = true;
 
 
         function mainloop() {
+            if(gameRun){
+                
+            
             colorRect(0, 0, canvas.width, canvas.height, 'black');
             colorRect(playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE, 'red'); // player'
-
+            }
             playerMove();
             if (starting) {
-                for (var i = 0; i < 2; i++) {
+                for (var i = 0; i < eNum; i++) {
                     makeEnemy();
                 }
                 starting = false
@@ -112,11 +127,15 @@
         function enemyMove() {
             enemies.forEach(function(e, i, array) {
                 e.enemyXpos -= e.enemyXspeed;
-                if (e.enemyYpos > canvas.height) {
-                    e.enemyYpos = 0 - e.ENEMY_SIZE;
+                if (e.enemyXpos < -100) {
                     
-                if  (enemyXpos < 0)
-                    enemyXpos = 1000;
+                    
+                    e.enemyXpos = 0 - e.ENEMY_SIZE;
+                    e.eXpos = 1000;
+                    e.eXspeed = Math.floor(Math.random(i) * (15 - 7) + 5);
+                    e.eYpos = Math.floor(Math.random() * (canvas.height - 0) + 5)
+//                if  (enemyXpos < 0)
+//                    enemyXpos = 1000;
                 }
             })
         }
@@ -159,6 +178,6 @@
             canvasContext.fillStyle = c;
             canvasContext.fillRect(x, y, w, h);
         }
-
+        
     </script>
 </body>

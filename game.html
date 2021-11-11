@@ -25,26 +25,35 @@
             userName = prompt('whats your name?', 'Tony') //insert name
         }
 
-        var eNum = 0;
-
-        var difficulty = '';
+        var diffculty = '';
         var pass = false;
 
-        while (pass == false) { //until happy no exit
-            difficulty = prompt('how hard do you want it?', 'easy');
-            difficulty = difficulty.toLowerCase() //converts to lower case
-            if (difficulty != null) {
+        var eNum = 0;
+
+        while (pass == false) {
+            diffculty = prompt('how hard do you want it?', 'easy, medium or hard')
+            diffculty = diffculty.toLowerCase()
+            if (diffculty == 'easy' || diffculty == 'medium' || diffculty == 'hard' || diffculty == 'asian') {
                 pass = true;
+                //convert difficulty to lower case 'Easy'
             }
         }
 
-        if (difficulty == 'easy') {
-            eNum = 4;
+
+        if (diffculty == 'easy') {
+            eNum = 5;
         }
 
-        if (difficulty == 'hard') {
-            eNum = 50;
+
+        if (diffculty == 'medium') {
+            eNum = 10;
         }
+
+
+        if (diffculty == 'hard') {
+            eNum = 20;
+        }
+
 
         //player vars
         var playerXpos = 200;
@@ -68,61 +77,61 @@
         function mainloop() {
             if (gameRun) {
 
-
-                colorRect(0, 0, canvas.width, canvas.height, 'black');
+                colorRect(0, 0, canvas.width, canvas.height, 'black'); //background
                 colorRect(playerXpos, playerYpos, PLAYER_SIZE, PLAYER_SIZE, 'red'); // player'
-            
-            playerMove();
-            if (starting) {
-                for (var i = 0; i < eNum; i++) {
-                    makeEnemy();
+
+                playerMove();
+                if (starting) {
+                    for (var i = 0; i < eNum; i++) {
+                        makeEnemy();
+                    }
+                    starting = false
                 }
-                starting = false
-            }
-            drawEnemy();
-            enemyMove();
-            colorText('score' + score, 10, 20, '20px Arial', 'white')
+                drawEnemy();
+                enemyMove();
+                colorText('score' + score, 10, 20, '20px Arial', 'white')
 
             } else {
-            gameRun = false;
-        colorRect(0, 0, canvas.width, canvas.height, 'red');
-                colorText(userName + ' ' + 'scored: ' + score, 100 ,50, '40px Arial', 'black')
-        }
-        }
-            
-            //end func
+                gameRun = false;
+                colorRect(0, 0, canvas.width, canvas.height, 'red');
+                colorText(userName + ' ' + 'scored: ' + score, 100, 50, '40px Arial', 'black')
+            }
+        } //end func
 
-        function colorRect(x, y, w, h, c) {
+
+
+        function colorRect(x, y, w, h, c) { //
             canvasContext.fillStyle = c;
             canvasContext.fillRect(x, y, w, h);
         } //end func
-        
-        function colorText(msg, x, y, f, c) {
-            canvasContext.font=f;
+
+        function colorText(msg, x, y, f, c) { //text color
+            canvasContext.font = f;
             canvasContext.fillStyle = c;
             canvasContext.fillText(msg, x, y);
-        }
+        } //end func
 
         var enemyCounter = 0;
-        var setCount = 0 
-        function makeEnemy() {
+        var setCount = 0
+
+        function makeEnemy() { //enemies and enemy placement
             var ENEMY_SIZE = 100;
-            var gap = Math.floor(Math.random() * (canvas.height * 0.3)) + canvas.height * 0.2;
+            var gap = Math.floor(Math.random() * (canvas.height * 0.16)) + canvas.height * 0.16;
             var enemyYpos = 0
-            
-            if(enemyCounter%2 == 0){
-                enemyYpos = canvas.height/2 - gap;
+
+            if (enemyCounter % 2 == 0) {
+                enemyYpos = canvas.height / 2 - gap;
             } else {
-                enemyYpos = canvas.height/2 + gap;
+                enemyYpos = canvas.height / 2 + gap;
                 setCount++;
             }
-            
+
             var enemyXpos = canvas.width + setCount * (ENEMY_SIZE * 2);
             var eXspeed = 8;
             var eYspeed = 5;
-            
+
             enemyCounter++;
-            
+
             //enemy vars
             var enemy = {
                 enemyXpos: enemyXpos,
@@ -138,22 +147,15 @@
 
         function drawEnemy() {
             enemies.forEach(function(e, i, array) {
-                colorRect(e.enemyXpos, e.enemyYpos, e.ENEMY_SIZE, e.ENEMY_SIZE, 'lime');
+                colorRect(e.enemyXpos, e.enemyYpos, e.ENEMY_SIZE, e.ENEMY_SIZE, 'lime'); //color of enemies
             })
         } //end func
-
-
-        //function enemyMove() {
-        //enemies.forEach(function(e, i, array) {
-        //e.enemyXpos -= e.enemyXspeed;
-        //if (e.enemyYpos > canvas.height) {
-        // e.enemyYpos = 0 - e.ENEMY_SIZE;
 
         function enemyMove() {
             enemies.forEach(function(e, i, array) {
                 e.enemyXpos -= e.enemyXspeed;
                 if (e.enemyXpos < 0 - e.ENEMY_SIZE) {
-                    score ++;
+                    score++;
 
 
                     e.enemyXpos = canvas.width - e.ENEMY_SIZE;
@@ -162,15 +164,15 @@
                     //                if  (enemyXpos < 0)
                     //                    enemyXpos = 1000;
                 }
-                
-            if (e.enemyXpos < playerXpos + PLAYER_SIZE &&
-                 e.enemyXpos + e.ENEMY_SIZE > playerXpos &&
-                 e.enemyYpos < playerYpos + PLAYER_SIZE &&
-                e.enemyYpos + e.ENEMY_SIZE > playerYpos //when player hits enemy
-            ) {
-                console.log('hit')
-                gameRun = false;
-            } 
+
+                if (e.enemyXpos < playerXpos + PLAYER_SIZE &&
+                    e.enemyXpos + e.ENEMY_SIZE > playerXpos &&
+                    e.enemyYpos < playerYpos + PLAYER_SIZE &&
+                    e.enemyYpos + e.ENEMY_SIZE > playerYpos //when player hits enemy
+                ) {
+                    console.log('hit')
+                    gameRun = false;
+                }
             })
         } //end func
 
@@ -204,22 +206,9 @@
             if (playerYpos + PLAYER_SIZE >= canvas.height) {
                 playerYpos = canvas.height - PLAYER_SIZE;
                 playerYspeed = -5;
-           }
-           
- 
-            
-            
-            
-            
-            //if (e.enemyXpos < playerXpos + PLAYER_SIZE &&
-             //  e.enemyXpos + e.ENEMY_SIZE > playerXpos &&
-               //e.enemyYpos < playerYpos + PLAYER_SIZE &&
-            //   e.enemyYpos + e.ENEMY_SIZE > playerYpos
-              // )  
-        
-        
-        
-        }//end func
+            }
+
+        } //end func
 
 
         function colorRect(x, y, w, h, c) {
